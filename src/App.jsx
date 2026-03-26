@@ -40,7 +40,7 @@ function SelectField({ label, field, value, onChange, options }) {
 // ── App ────────────────────────────────────────────────────────────────────────
 export default function App() {
   const [screen, setScreen] = useState('phone') // phone | form | success
-  const [phone, setPhone] = useState('+91')
+  const [phone, setPhone] = useState('')
   const [phoneError, setPhoneError] = useState('')
   const [phoneLoading, setPhoneLoading] = useState(false)
   const [formData, setFormData] = useState({})
@@ -183,11 +183,16 @@ export default function App() {
             <label style={{ color:'#5a8a7a', fontSize:'11px', textTransform:'uppercase', letterSpacing:'0.7px' }}>WhatsApp / Phone Number</label>
             <input type="tel" value={phone}
               onChange={e => {
-                // Keep only digits the user types and always prefix with +91.
-                // User should enter up to 10 national digits only.
-                const digitsOnly = e.target.value.replace(/\D/g, '')
-                const national = digitsOnly.slice(-10) // take up to last 10 digits
-                setPhone(national ? `+91${national}` : '+91')
+                // Allow the user to type digits or a leading +. Don't force +91 here —
+                // normalization will happen on submit. This makes backspace work.
+                let val = e.target.value || ''
+                // remove spaces
+                val = val.replace(/\s+/g, '')
+                // keep a single leading + if present, remove any other pluses
+                val = val.replace(/(?!^\+)\+/g, '')
+                // strip any characters except digits and a leading +
+                val = val.replace(/[^\d+]/g, '')
+                setPhone(val)
                 setPhoneError('')
               }}
               onKeyDown={e => e.key === 'Enter' && handlePhoneSubmit()}
