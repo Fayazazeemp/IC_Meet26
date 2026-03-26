@@ -40,7 +40,7 @@ function SelectField({ label, field, value, onChange, options }) {
 // ── App ────────────────────────────────────────────────────────────────────────
 export default function App() {
   const [screen, setScreen] = useState('phone') // phone | form | success
-  const [phone, setPhone] = useState('')
+  const [phone, setPhone] = useState('+91')
   const [phoneError, setPhoneError] = useState('')
   const [phoneLoading, setPhoneLoading] = useState(false)
   const [formData, setFormData] = useState({})
@@ -62,7 +62,9 @@ export default function App() {
   // ── Phone submit ──────────────────────────────────────────────────────────────
   async function handlePhoneSubmit() {
     const norm = normalizePhone(phone)
-    if (!norm || norm.length < 7) { setPhoneError('Please enter a valid phone number.'); return }
+    const digits = norm.replace(/\D/g, '')
+    // require exactly 10 national digits (user should type only the 10-digit number)
+    if (digits.length !== 10) { setPhoneError('Please enter a 10-digit phone number (without country code).'); return }
     setPhoneLoading(true)
     setPhoneError('')
     try {
@@ -179,9 +181,16 @@ export default function App() {
           <div style={{ display:'flex', flexDirection:'column', gap:'6px', marginBottom:'4px' }}>
             <label style={{ color:'#5a8a7a', fontSize:'11px', textTransform:'uppercase', letterSpacing:'0.7px' }}>WhatsApp / Phone Number</label>
             <input type="tel" value={phone}
-              onChange={e => { setPhone(e.target.value); setPhoneError('') }}
+              onChange={e => {
+                // Keep only digits the user types and always prefix with +91.
+                // User should enter up to 10 national digits only.
+                const digitsOnly = e.target.value.replace(/\D/g, '')
+                const national = digitsOnly.slice(-10) // take up to last 10 digits
+                setPhone(national ? `+91${national}` : '+91')
+                setPhoneError('')
+              }}
               onKeyDown={e => e.key === 'Enter' && handlePhoneSubmit()}
-              placeholder="+91 XXXXX XXXXX"
+              placeholder="+91 1234567890"
               style={{ padding:'14px 16px', background:'#060d16', border:'1px solid #1a3050', borderRadius:'10px', color:'#e0d8c8', fontSize:'17px', outline:'none', letterSpacing:'1px', fontFamily:'Raleway, sans-serif' }}
               onFocus={e => e.target.style.borderColor = 'rgba(201,162,39,0.5)'}
               onBlur={e => e.target.style.borderColor = '#1a3050'}
