@@ -171,6 +171,12 @@ export default function AdminDashboard({ onClose }) {
             <option value="csv">Pre-filled (CSV)</option>
             <option value="new">Walk-ins</option>
           </select>
+          <select value={checkFilter} onChange={e => setCheckFilter(e.target.value)}
+            style={{ padding:'11px 14px', background:_surface, border:`1px solid ${_border}`, borderRadius:'10px', color:hexToRgba(_muted,0.9), fontSize:'13px', outline:'none', cursor:'pointer' }}>
+            <option value="all">All check-in</option>
+            <option value="checked">Checked-in</option>
+            <option value="not_checked">Not checked-in</option>
+          </select>
         </div>
 
         {/* List */}
