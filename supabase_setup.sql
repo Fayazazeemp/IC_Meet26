@@ -1,5 +1,5 @@
 -- ================================================================
--- Islamic Campus Meetup 2026 — Supabase Database Setup
+-- Islamic Campus Students Gatheringup 2026 — Supabase Database Setup
 -- Run this in: Supabase Dashboard → SQL Editor → New Query
 -- ================================================================
 

@@ -1,19 +1,25 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
+  /* Accent / semantic */
   --gold: #c9a227;
-  --gold-dim: rgba(201,162,39,0.15);
-  --gold-border: rgba(201,162,39,0.3);
-  --navy: #060d16;
-  --navy-2: #0a1628;
-  --navy-3: #0f1c2e;
-  --navy-4: #163860;
-  --blue-mid: #1e3a5f;
-  --text: #e8e0d0;
-  --text-dim: #8ab0c0;
-  --text-muted: #4a6a7a;
-  --green: #5a9a6a;
+  --gold-dim: rgba(201,162,39,0.10);
+  --gold-border: rgba(201,162,39,0.14);
+  --green: #2f9d63;
   --red: #c85050;
+
+  /* Neutral / surface */
+  --bg: #f7f9fb;         /* page background */
+  --surface: #ffffff;    /* cards, panels */
+  --muted: #6b7280;      /* secondary text */
+  --subtle: #94a3b8;     /* subtle text */
+  --border: #e6e9ee;     /* borders */
+  --accent-strong: #0f1724;
+
+  /* legacy tokens (kept for compatibility) */
+  --text: var(--accent-strong);
+  --text-dim: var(--muted);
+  --text-muted: var(--subtle);
   --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-body: 'Raleway', sans-serif;
 }
@@ -21,7 +27,7 @@
 html { font-size: 16px; }
 
 body {
-  background: var(--navy);
+  background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
   min-height: 100vh;
@@ -34,8 +40,8 @@ input, select, textarea {
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--navy-2); }
-::-webkit-scrollbar-thumb { background: var(--blue-mid); border-radius: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 6px; }
 
 /* Animations */
 @keyframes fadeIn {

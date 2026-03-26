@@ -1,6 +1,6 @@
-# Islamic Campus Meetup 2026 — Registration App
+# Islamic Campus Students Gatheringup 2026 — Registration App
 
-A mobile-first registration web app for the Islamic Campus Meetup with:
+A mobile-first registration web app for the Islamic Campus Students Gatheringup with:
 - Phone-based lookup with pre-fill from 58 students CSV
 - One registration per phone number (enforced at DB level)
 - Photo upload + circle crop for badge
