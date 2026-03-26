@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { fetchAllRegistrations, deleteRegistration } from '../lib/supabase'
+import { fetchAllRegistrations, deleteRegistration, setCheckIn } from '../lib/supabase'
 
 export default function AdminDashboard({ onClose }) {
   const [registrations, setRegistrations] = useState([])
@@ -49,6 +49,21 @@ export default function AdminDashboard({ onClose }) {
     }
   }
 
+  // Toggle check-in status for a registration and persist via Supabase
+  async function toggleCheckIn(reg) {
+    const id = reg.id
+    const newVal = !reg.checked_in
+    try {
+      // Optimistic UI update
+      setRegistrations(prev => prev.map(r => r.id === id ? { ...r, checked_in: newVal } : r))
+      await setCheckIn(id, newVal)
+    } catch (e) {
+      // Revert on error
+      setRegistrations(prev => prev.map(r => r.id === id ? { ...r, checked_in: reg.checked_in } : r))
+      alert('Failed to update check-in: ' + e.message)
+    }
+  }
+
   function exportCSV() {
     const headers = ['Name', "Father's Name", 'Phone', 'Email', 'College', 'Course', 'Year', 'Area', 'Unit', 'Panchayat', 'Role', 'Instagram', 'Source', 'Registered At']
     const rows = registrations.map(r => [
@@ -68,6 +83,7 @@ export default function AdminDashboard({ onClose }) {
     total: registrations.length,
     csv: registrations.filter(r => r.source === 'csv').length,
     newWalk: registrations.filter(r => r.source === 'new').length,
+    checked: registrations.filter(r => r.checked_in).length,
   }
 
   const S = { // inline style helpers
@@ -132,6 +148,7 @@ export default function AdminDashboard({ onClose }) {
             { label:'Total Registered', val: stats.total, icon:'👥', color:_gold },
             { label:'From CSV (Pre-filled)', val: stats.csv, icon:'📋', color:_green },
             { label:'Walk-ins', val: stats.newWalk, icon:'🚶', color:hexToRgba(_accent,0.9) },
+            { label:'Checked-in', val: stats.checked, icon:'✅', color:hexToRgba(_gold,0.95) },
           ].map(s => (
             <div key={s.label} style={{ ...S.card, textAlign:'center' }}>
               <div style={{ fontSize:'22px', marginBottom:'4px' }}>{s.icon}</div>
@@ -176,10 +193,20 @@ export default function AdminDashboard({ onClose }) {
                     <div style={{ color:hexToRgba(_muted,0.85), fontSize:'13px', marginTop:'2px' }}>{r.college || '—'}</div>
                     <div style={{ color:hexToRgba(_muted,0.7), fontSize:'12px', marginTop:'2px' }}>{r.phone} {r.area ? `• ${r.area}` : ''}</div>
                   </div>
-                  <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-end', gap:'5px', marginLeft:'12px' }}>
-                    {r.role && <span style={{ background: hexToRgba(_gold, 0.12), color: _gold, fontSize:'11px', padding:'3px 9px', borderRadius:'20px', whiteSpace:'nowrap' }}>{r.role}</span>}
-                    <span style={{ color:hexToRgba(_muted,0.7), fontSize:'11px' }}>#{i + 1}</span>
-                    {r.source === 'csv' && <span style={{ background: hexToRgba(_green,0.12), color:_green, fontSize:'10px', padding:'2px 6px', borderRadius:'20px' }}>CSV</span>}
+                  <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-end', gap:'8px', marginLeft:'12px' }}>
+                    <div style={{ display:'flex', gap:'8px', alignItems:'center' }}>
+                      {r.role && <span style={{ background: hexToRgba(_gold, 0.12), color: _gold, fontSize:'11px', padding:'3px 9px', borderRadius:'20px', whiteSpace:'nowrap' }}>{r.role}</span>}
+                      {r.source === 'csv' && <span style={{ background: hexToRgba(_green,0.12), color:_green, fontSize:'10px', padding:'2px 6px', borderRadius:'20px' }}>CSV</span>}
+                    </div>
+                    <div style={{ display:'flex', gap:'8px', alignItems:'center' }}>
+                      <span style={{ color:hexToRgba(_muted,0.7), fontSize:'11px' }}>#{i + 1}</span>
+                      {/* Check-in toggle */}
+                      <button onClick={e => { e.stopPropagation(); toggleCheckIn(r) }}
+                        title={r.checked_in ? 'Undo check-in' : 'Confirm check-in'}
+                        style={{ padding:'6px 10px', background: r.checked_in ? hexToRgba(_gold,0.12) : 'transparent', color: r.checked_in ? _gold : hexToRgba(_muted,0.9), border:`1px solid ${r.checked_in ? hexToRgba(_gold,0.25) : hexToRgba(_muted,0.12)}`, borderRadius:'8px', cursor:'pointer', fontSize:'12px' }}>
+                        {r.checked_in ? 'Checked in' : 'Check in'}
+                      </button>
+                    </div>
                   </div>
                 </div>
 

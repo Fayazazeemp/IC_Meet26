@@ -127,6 +127,18 @@ export async function getRegistrationCount() {
   return count
 }
 
+// Mark a registration as checked-in (or undo). Assumes `checked_in` boolean column exists.
+export async function setCheckIn(id, checked = true) {
+  const { data, error } = await supabase
+    .from('registrations')
+    .update({ checked_in: checked })
+    .eq('id', id)
+    .select()
+    .single()
+  if (error) throw error
+  return data
+}
+
 export function normalizePhone(p = '') {
   return p.replace(/\s+/g, '').trim()
 }
