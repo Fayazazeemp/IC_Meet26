@@ -123,7 +123,7 @@ export default function BadgeGenerator({ registrant, onClose }) {
     ctx.font = 'bold 30px "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif'
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
-    ctx.fillText('فتية الإسلام', W / 2, 68)
+    ctx.fillText('فتية الإسلام', W / 2, 66)
 
     /* decorative gold divider */
     ctx.strokeStyle = GOLD
