@@ -56,7 +56,7 @@ export default function BadgeGenerator({ registrant, onClose }) {
     ctx.fillStyle = '#ffffff'
     ctx.font = 'bold 18px Cormorant Garamond, Georgia, serif'
     ctx.letterSpacing = '2px'
-    ctx.fillText('Islamic Campus Students GatheringUP', W / 2, 60)
+    ctx.fillText('Islamic Campus Students Gathering', W / 2, 60)
 
     ctx.fillStyle = '#c9a227'
     ctx.font = '11px Raleway, sans-serif'
@@ -163,7 +163,7 @@ export default function BadgeGenerator({ registrant, onClose }) {
     ctx.fillText('SIO — Student Islamic Organisation of India', cx, H - 22)
     ctx.fillStyle = 'rgba(255,255,255,0.2)'
     ctx.font = '10px Raleway, sans-serif'
-    ctx.fillText('Islamic Campus Students Gatheringup 2026', cx, H - 10)
+    ctx.fillText('Islamic Campus Students Gathering 2026', cx, H - 10)
   }
 
   useEffect(() => { drawBadge(photoSrc) }, [photoSrc, drawBadge])

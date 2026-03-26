@@ -83,7 +83,7 @@ export default function AdminDashboard({ onClose }) {
         <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:'24px', flexWrap:'wrap', gap:'12px' }}>
           <div>
             <h2 style={{ color:'#c9a227', fontFamily:'Cormorant Garamond, serif', fontSize:'26px', margin:'0 0 4px' }}>Admin Dashboard</h2>
-            <p style={{ color:'#3a6a5a', margin:0, fontSize:'13px' }}>Islamic Campus Students Gatheringup 2026 · Registrations</p>
+            <p style={{ color:'#3a6a5a', margin:0, fontSize:'13px' }}>Islamic Campus Students Gathering 2026 · Registrations</p>
           </div>
           <div style={{ display:'flex', gap:'10px', flexWrap:'wrap' }}>
             <button onClick={load} style={{ padding:'8px 14px', background:'#0f1c2e', color:'#8ab0c0', border:'1px solid #1e3a5f', borderRadius:'8px', cursor:'pointer', fontSize:'13px' }}>↺ Refresh</button>
