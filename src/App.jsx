@@ -173,7 +173,7 @@ export default function App() {
           <Field label="Email Address" field="email" value={formData.email} onChange={setField} type="email" required/>
           <Field label="College / Institution" field="college" value={formData.college} onChange={setField} required />
           <Field label="Course" field="course" value={formData.course} onChange={setField} required/>
-          <SelectField label="Year" field="year" value={formData.year} onChange={setField} options={['First Year', 'Second Year', 'Third Year', 'Fourth Year', 'Plus One', 'Plus Two', 'PG First Year', 'PG Second Year']} required/>
+          <SelectField label="Year" field="year" value={formData.year} onChange={setField} options={['Plus One', 'Plus Two', 'UG First Year', 'UG Second Year', 'UG Third Year', 'UG Fourth Year', 'PG First Year', 'PG Second Year']} required/>
           <Field label="Area (നാട്ടിലെ ഏരിയ)" field="area" value={formData.area} onChange={setField} required/>
           <Field label="Unit" field="unit" value={formData.unit} onChange={setField} required/>
           <Field label="Panchayat" field="panchayat" value={formData.panchayat} onChange={setField} />
