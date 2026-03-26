@@ -65,7 +65,10 @@ export default function App() {
     try {
       const existing = await checkRegistration(norm)
       if (existing) {
-        setPhoneError('✓ This number is already registered. One registration per number is allowed.')
+        // If the phone is already registered, take the user to the
+        // badge / WhatsApp page (reuse the success screen and badge generator).
+        setRegisteredData(existing)
+        setScreen('success')
         setPhoneLoading(false)
         return
       }

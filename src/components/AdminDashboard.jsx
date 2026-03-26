@@ -67,10 +67,10 @@ export default function AdminDashboard({ onClose }) {
   }
 
   function exportCSV() {
-    const headers = ['Name', "Father's Name", 'Phone', 'Email', 'College', 'Course', 'Year', 'Area', 'Unit', 'Panchayat', 'Role', 'Instagram', 'Source', 'Registered At']
+    const headers = ['Name', "Father's Name", 'Phone', 'Email', 'College', 'Course', 'Year', 'Area', 'Unit', 'Panchayat', 'Role', 'Instagram', 'Source', 'Registered At', 'Checked In']
     const rows = registrations.map(r => [
       r.name, r.fathers_name, r.phone, r.email, r.college, r.course, r.year,
-      r.area, r.unit, r.panchayat, r.role, r.instagram, r.source, r.registered_at
+      r.area, r.unit, r.panchayat, r.role, r.instagram, r.source, r.registered_at, r.checked_in ? 'Yes' : 'No'
     ].map(v => `"${(v || '').replace(/"/g, '""')}"`).join(','))
     const csv = [headers.join(','), ...rows].join('\n')
     const blob = new Blob([csv], { type: 'text/csv' })
