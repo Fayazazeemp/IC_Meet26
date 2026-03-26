@@ -167,17 +167,17 @@ export default function App() {
 
         <div className="fade-in-delay" style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: 24, display: 'flex', flexDirection: 'column', gap: 14 }}>
           <Field label="Full Name" field="name" value={formData.name} onChange={setField} required />
-          <Field label="Father's Name" field="fathersName" value={formData.fathersName} onChange={setField} />
+          <Field label="Father's Name" field="fathersName" value={formData.fathersName} onChange={setField} required/>
           <Field label="Phone Number" field="phone" value={formData.phone} onChange={setField} required type="tel" />
-          <Field label="WhatsApp Number" field="whatsapp" value={formData.whatsapp || formData.phone} onChange={setField} placeholder="Same as phone if same" />
-          <Field label="Email Address" field="email" value={formData.email} onChange={setField} type="email" />
+          <Field label="WhatsApp Number" field="whatsapp" value={formData.whatsapp || formData.phone} onChange={setField} placeholder="Same as phone if same" required/>
+          <Field label="Email Address" field="email" value={formData.email} onChange={setField} type="email" required/>
           <Field label="College / Institution" field="college" value={formData.college} onChange={setField} required />
-          <Field label="Course" field="course" value={formData.course} onChange={setField} />
-          <SelectField label="Year" field="year" value={formData.year} onChange={setField} options={['First Year', 'Second Year', 'Third Year', 'Fourth Year', 'Plus One', 'Plus Two', 'PG First Year', 'PG Second Year']} />
-          <Field label="Area (നാട്ടിലെ ഏരിയ)" field="area" value={formData.area} onChange={setField} />
-          <Field label="Unit" field="unit" value={formData.unit} onChange={setField} />
+          <Field label="Course" field="course" value={formData.course} onChange={setField} required/>
+          <SelectField label="Year" field="year" value={formData.year} onChange={setField} options={['First Year', 'Second Year', 'Third Year', 'Fourth Year', 'Plus One', 'Plus Two', 'PG First Year', 'PG Second Year']} required/>
+          <Field label="Area (നാട്ടിലെ ഏരിയ)" field="area" value={formData.area} onChange={setField} required/>
+          <Field label="Unit" field="unit" value={formData.unit} onChange={setField} required/>
           <Field label="Panchayat" field="panchayat" value={formData.panchayat} onChange={setField} />
-          <SelectField label="SIO Member / Applicant / Worker" field="role" value={formData.role} onChange={setField} options={['Member', 'Applicant', 'Worker']} />
+          <SelectField label="SIO Member / Applicant / Worker" field="role" value={formData.role} onChange={setField} options={['Member', 'Applicant', 'Worker']} required/>
           <Field label="Instagram ID" field="instagram" value={formData.instagram} onChange={setField} placeholder="@yourhandle" />
 
           {submitError && (<div style={{ background: 'rgba(200,80,80,0.08)', border: '1px solid rgba(200,80,80,0.25)', borderRadius: 8, padding: '10px 14px', color: 'var(--red)', fontSize: 13 }}>⚠ {submitError}</div>)}
