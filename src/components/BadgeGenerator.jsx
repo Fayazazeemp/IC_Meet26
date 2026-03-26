@@ -14,6 +14,7 @@ export default function BadgeGenerator({ registrant, onClose }) {
   const dragging = useRef(false)
   const dragOffset = useRef({ x: 0, y: 0 })
   const resizing = useRef(false)
+  const initCropRef = useRef(false)
 
   // Theme tokens / helpers (read once per render)
   const css = typeof window !== 'undefined' ? getComputedStyle(document.documentElement) : null
@@ -214,6 +215,22 @@ export default function BadgeGenerator({ registrant, onClose }) {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.drawImage(img, 0, 0)
 
+    // If this is the first draw for this uploaded image, initialize the
+    // crop box to a sensible large size (proportional to image dimensions).
+    // We set a ref so this runs only once per upload. Return after setting
+    // so the next render will draw with the new cropBox.
+    if (!initCropRef.current) {
+      const w = canvas.width
+      const h = canvas.height
+      const maxSide = Math.min(w, h)
+      const desired = Math.max(80, Math.min(Math.floor(maxSide * 0.45), 800))
+      const cx = Math.max(0, Math.floor((w - desired) / 2))
+      const cy = Math.max(0, Math.floor((h - desired) / 3))
+      setCropBox({ x: cx, y: cy, size: desired })
+      initCropRef.current = true
+      return
+    }
+
     // Darken outside
   ctx.fillStyle = hexToRgba(_accent, 0.55)
     ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -299,7 +316,7 @@ export default function BadgeGenerator({ registrant, onClose }) {
     const file = e.target.files[0]
     if (!file) return
     const reader = new FileReader()
-    reader.onload = ev => { setCropSrc(ev.target.result); setShowCrop(true); setCropBox({ x: 40, y: 40, size: 180 }) }
+    reader.onload = ev => { initCropRef.current = false; setCropSrc(ev.target.result); setShowCrop(true) }
     reader.readAsDataURL(file)
   }
 
