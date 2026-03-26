@@ -129,12 +129,15 @@ export async function getRegistrationCount() {
 
 // Mark a registration as checked-in (or undo). Assumes `checked_in` boolean column exists.
 export async function setCheckIn(id, checked = true) {
+  // Use maybeSingle() because some Supabase responses may return an array
+  // even for single-row updates depending on the API surface; maybeSingle
+  // safely returns null or the single object.
   const { data, error } = await supabase
     .from('registrations')
     .update({ checked_in: checked })
     .eq('id', id)
     .select()
-    .single()
+    .maybeSingle()
   if (error) throw error
   return data
 }

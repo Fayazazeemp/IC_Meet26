@@ -55,3 +55,11 @@ CREATE POLICY "Allow public delete"
 -- VALUES ('+919999999999', 'Test Student', 'Test College', 'Member', 'new');
 -- SELECT * FROM registrations;
 -- DELETE FROM registrations WHERE phone = '+919999999999';
+
+-- ================================================================
+-- Migration: add checked_in column for event check-ins
+-- Run this if you plan to use the admin check-in feature.
+-- This is safe to run multiple times; it uses IF NOT EXISTS.
+-- ================================================================
+ALTER TABLE registrations
+  ADD COLUMN IF NOT EXISTS checked_in boolean DEFAULT false;
