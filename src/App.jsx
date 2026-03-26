@@ -64,7 +64,7 @@ export default function App() {
     const norm = normalizePhone(phone)
     const digits = norm.replace(/\D/g, '')
     // require exactly 10 national digits (user should type only the 10-digit number)
-    if (digits.length !== 10) { setPhoneError('Please enter a 10-digit phone number (without country code).'); return }
+    if (digits.length !== 13) { setPhoneError('Please enter a 13-digit phone number (with country code).'); return }
     setPhoneLoading(true)
     setPhoneError('')
     try {
