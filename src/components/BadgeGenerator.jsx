@@ -11,7 +11,7 @@ import { useRef, useEffect } from 'react'
  */
 
 const SIO_LOGO_URL =
-'src/sio pkd.png'
+  '/sio-pkd.png'
 export default function BadgeGenerator({ registrant, onClose }) {
   const canvasRef = useRef(null)
 
@@ -42,13 +42,13 @@ export default function BadgeGenerator({ registrant, onClose }) {
     ctx.scale(dpr, dpr)
 
     /* ── colour palette ── */
-    const DARK    = '#0b1120'
-    const GOLD    = '#c9a53a'
-    const GOLD2   = '#f5d97a'
-    const WHITE   = '#ffffff'
-    const LIGHT   = '#f0f4ff'
-    const MUTED   = '#7b8aaa'
-    const CREAM   = '#fdf9ef'
+    const DARK = '#0b1120'
+    const GOLD = '#c9a53a'
+    const GOLD2 = '#f5d97a'
+    const WHITE = '#ffffff'
+    const LIGHT = '#f0f4ff'
+    const MUTED = '#7b8aaa'
+    const CREAM = '#fdf9ef'
 
     /* ── helper: rounded rect path ── */
     function roundRect(x, y, w, h, r) {
@@ -221,7 +221,7 @@ export default function BadgeGenerator({ registrant, onClose }) {
     // barcode-style decoration
     const bcX = (W - 115) / 2
     const bcY = 386
-    const barWidths = [3,1,2,1,3,2,1,3,1,2,3,1,2,1,3,2,1,2,3,1]
+    const barWidths = [3, 1, 2, 1, 3, 2, 1, 3, 1, 2, 3, 1, 2, 1, 3, 2, 1, 2, 3, 1]
     let bx = bcX
     barWidths.forEach((bw, i) => {
       ctx.fillStyle = i % 2 === 0 ? 'rgba(255,255,255,0.25)' : 'transparent'
