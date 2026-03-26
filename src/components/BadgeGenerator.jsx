@@ -11,8 +11,7 @@ import { useRef, useEffect } from 'react'
  */
 
 const SIO_LOGO_URL =
-  'https://img.notionusercontent.com/s3/prod-files-secure%2Fea82256e-6356-42c7-9fd8-badda1b9f8b7%2F5b1836f7-1913-4b4b-b407-b5379e102ea7%2Fsio_pkd.png/size/w=1410?exp=1774619113&sig=yosxXalYXAcwUp-hsALXYppVDzx8ejSLLzuluceB8k0&id=2f8c9098-5d9f-801e-84de-df0b13d2e4ce&table=block'
-
+'src/sio pkd.png'
 export default function BadgeGenerator({ registrant, onClose }) {
   const canvasRef = useRef(null)
 
@@ -159,7 +158,7 @@ export default function BadgeGenerator({ registrant, onClose }) {
     ctx.fillStyle = GOLD2
     ctx.font = '13px "Raleway", sans-serif'
     ctx.textAlign = 'center'
-    ctx.fillText('📅  April 05, 2026  ·  9:30 AM', W / 2, pillY + 20)
+    ctx.fillText('📅  April 05, 2026  ·  9:30 AM', W / 2, pillY + 15)
 
     /* ═══════════════════════════════════════════════════
        6. VENUE
@@ -183,7 +182,7 @@ export default function BadgeGenerator({ registrant, onClose }) {
     ctx.fillStyle = DARK
     ctx.font = 'bold 13px "Raleway", sans-serif'
     ctx.textAlign = 'center'
-    ctx.fillText('★  STUDENT DELEGATE  ★', W / 2, roleY + 21)
+    ctx.fillText('★  STUDENT DELEGATE  ★', W / 2, roleY + 17)
 
     /* ═══════════════════════════════════════════════════
        8. ATTENDEE NAME & CAMPUS
@@ -195,7 +194,7 @@ export default function BadgeGenerator({ registrant, onClose }) {
     ctx.fillStyle = WHITE
     ctx.font = 'bold 28px "Cormorant Garamond", "Georgia", serif'
     ctx.textAlign = 'center'
-    ctx.fillText(fitText(name, W - 48, 'bold 28px "Cormorant Garamond", Georgia, serif'), W / 2, 306)
+    ctx.fillText(fitText(name, W - 48, 'bold 28px "Cormorant Garamond", Georgia, serif'), W / 2, 303)
 
     // underline
     ctx.strokeStyle = 'rgba(201,165,58,0.4)'
@@ -208,7 +207,7 @@ export default function BadgeGenerator({ registrant, onClose }) {
     ctx.fillStyle = '#8fa4cc'
     ctx.font = '14px "Raleway", sans-serif'
     ctx.textAlign = 'center'
-    ctx.fillText(fitText(college, W - 60, '14px Raleway, sans-serif'), W / 2, 342)
+    ctx.fillText(fitText(college, W - 60, '14px Raleway, sans-serif'), W / 2, 335)
 
     /* ═══════════════════════════════════════════════════
        9. TICKET NUMBER / SCAN ID (decorative)
@@ -220,14 +219,14 @@ export default function BadgeGenerator({ registrant, onClose }) {
     ctx.fillText(ticketId, W / 2, 374)
 
     // barcode-style decoration
-    const bcX = (W - 160) / 2
+    const bcX = (W - 115) / 2
     const bcY = 386
     const barWidths = [3,1,2,1,3,2,1,3,1,2,3,1,2,1,3,2,1,2,3,1]
     let bx = bcX
     barWidths.forEach((bw, i) => {
       ctx.fillStyle = i % 2 === 0 ? 'rgba(255,255,255,0.25)' : 'transparent'
       if (i % 2 === 0) {
-        ctx.fillRect(bx, bcY, bw * 3, 22)
+        ctx.fillRect(bx, bcY, bw * 3, 28)
       }
       bx += bw * 3
     })
@@ -236,7 +235,7 @@ export default function BadgeGenerator({ registrant, onClose }) {
        10. PERFORATED TEAR LINE
     ═══════════════════════════════════════════════════ */
     // circle notches on left and right
-    ctx.fillStyle = '#e8edf5'   // match modal bg
+    ctx.fillStyle = '#cbcfd4ff'   // match modal bg
     ctx.beginPath()
     ctx.arc(8, STUB_Y, 14, 0, Math.PI * 2)
     ctx.fill()
@@ -245,7 +244,7 @@ export default function BadgeGenerator({ registrant, onClose }) {
     ctx.fill()
 
     // dashed line
-    ctx.strokeStyle = 'rgba(0,0,0,0.12)'
+    ctx.strokeStyle = 'rgba(0,0,0,0.22)'
     ctx.lineWidth = 1.5
     ctx.setLineDash([6, 5])
     ctx.beginPath()
@@ -265,7 +264,7 @@ export default function BadgeGenerator({ registrant, onClose }) {
     ctx.restore()
 
     // SIO logo
-    const logoSize = 88
+    const logoSize = 100
     const logoX = (W - logoSize) / 2
     const logoY = STUB_Y + 22
 
@@ -278,11 +277,11 @@ export default function BadgeGenerator({ registrant, onClose }) {
       ctx.drawImage(logoImg, logoX, logoY, logoSize, logoSize)
       ctx.restore()
       // ring
-      ctx.strokeStyle = GOLD
-      ctx.lineWidth = 2
-      ctx.beginPath()
-      ctx.arc(logoX + logoSize / 2, logoY + logoSize / 2, logoSize / 2, 0, Math.PI * 2)
-      ctx.stroke()
+      // ctx.strokeStyle = GOLD
+      // ctx.lineWidth = 2
+      // ctx.beginPath()
+      // ctx.arc(logoX + logoSize / 2, logoY + logoSize / 2, logoSize / 2, 0, Math.PI * 2)
+      // ctx.stroke()
     } else {
       // fallback circle
       ctx.fillStyle = 'rgba(201,165,58,0.15)'
