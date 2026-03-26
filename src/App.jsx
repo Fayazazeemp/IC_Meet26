@@ -120,13 +120,13 @@ export default function App() {
 
       <div className="fade-in" style={{ width: '100%', maxWidth: 420, position: 'relative', zIndex: 1 }}>
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <div style={{ fontSize: 52, marginBottom: 14, filter: 'drop-shadow(0 0 10px rgba(201,162,39,0.12))' }}>☪️</div>
+          <div style={{ fontSize: 52, marginBottom: 14, filter: 'drop-shadow(0 0 10px rgba(201,162,39,0.12))' }}>فتية الإسلام</div>
           <h1 style={{ color: 'var(--gold)', fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(20px,6vw,28px)', margin: 0, marginBottom: 6, letterSpacing: '2px' }}>ISLAMIC CAMPUS STUDENTS GATHERING</h1>
           <p style={{ color: 'var(--muted)', margin: 0, fontSize: 13, fontFamily: 'Raleway, sans-serif', letterSpacing: '1px' }}>STUDENT REGISTRATION · 2026</p>
         </div>
 
         <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 20, padding: '32px 28px', boxShadow: '0 6px 18px rgba(12,24,40,0.04)' }}>
-          <p style={{ color: 'var(--muted)', textAlign: 'center', margin: 0, marginBottom: 24, fontSize: 14, lineHeight: 1.5 }}>Enter your WhatsApp number to begin.<br /><span style={{ color: 'var(--subtle)', fontSize: 12 }}>You can type the 10-digit number (e.g. 9876543210) or include the country code +91 — both work and will be normalized.</span></p>
+          <p style={{ color: 'var(--muted)', textAlign: 'center', margin: 0, marginBottom: 24, fontSize: 14, lineHeight: 1.5 }}>Enter your Phone number to begin.<br /><span style={{ color: 'var(--subtle)', fontSize: 12 }}>You can use the phone number provided in the previous data collection form to pre fill your details.</span></p>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 4 }}>
             <label style={{ color: 'var(--muted)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.7px' }}>WhatsApp / Phone Number</label>
@@ -144,7 +144,7 @@ export default function App() {
           <button onClick={handlePhoneSubmit} disabled={phoneLoading} style={{ width: '100%', padding: 14, background: phoneLoading ? 'var(--border)' : 'var(--gold)', color: phoneLoading ? 'var(--muted)' : 'var(--accent-strong)', border: 'none', borderRadius: 10, cursor: phoneLoading ? 'not-allowed' : 'pointer', fontWeight: 'bold', fontSize: 16, fontFamily: 'Cormorant Garamond, serif', marginTop: 20, letterSpacing: '0.5px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, transition: 'all 0.15s' }}>{phoneLoading ? <><span className="spinner" style={{ borderTopColor: 'var(--muted)', borderColor: 'var(--border)' }} /> Checking…</> : 'Continue →'}</button>
         </div>
 
-        <p style={{ color: 'var(--subtle)', textAlign: 'center', fontSize: 12, marginTop: 16 }}>58 students pre-registered in database</p>
+        <p style={{ color: 'var(--subtle)', textAlign: 'center', fontSize: 12, marginTop: 16 }}>sio palakkad</p>
       </div>
     </div>
   )
