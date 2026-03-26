@@ -191,13 +191,13 @@ export default function App() {
       {showBadge && registeredData && <BadgeGenerator registrant={{ name: registeredData.name, college: registeredData.college, phone: registeredData.phone, role: registeredData.role, area: registeredData.area, unit: registeredData.unit, panchayat: registeredData.panchayat }} onClose={() => setShowBadge(false)} />}
       <div className="fade-in" style={{ textAlign: 'center', maxWidth: 420, width: '100%', position: 'relative', zIndex: 1 }}>
         <div style={{ fontSize: 60, marginBottom: 12 }}>🎉</div>
-        <h1 style={{ color: 'var(--gold)', fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(22px,6vw,30px)', margin: 0, marginBottom: 8 }}>JazakAllahu Khayran!</h1>
+        <h1 style={{ color: 'var(--gold)', fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(22px,6vw,30px)', margin: 0, marginBottom: 8 }}>جزاك اللهُ خيراً</h1>
         <p style={{ color: 'var(--green)', margin: 0, marginBottom: 4, fontSize: 15 }}>Assalamu Alaikum, {(registeredData?.name || '').split(' ')[0]}!</p>
         <p style={{ color: 'var(--subtle)', fontSize: 13, marginBottom: 28 }}>You're registered for the Islamic Campus Students Gathering 2026.</p>
 
         <div className="fade-in-delay" style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: 20, marginBottom: 20, textAlign: 'left' }}>
           <p style={{ color: 'var(--subtle)', fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, margin: '0 0 12px', fontFamily: 'Raleway, sans-serif' }}>Registration Summary</p>
-          {[['Name', registeredData?.name], ['College', registeredData?.college], ['Phone', registeredData?.phone], ['Role', registeredData?.role], ['Area', registeredData?.area]].filter(([, v]) => v).map(([k, v]) => (
+          {[['Name', registeredData?.name], ['College', registeredData?.college], ['Phone', registeredData?.phone], ['Unit', registeredData?.unit], ['Area', registeredData?.area]].filter(([, v]) => v).map(([k, v]) => (
             <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '7px 0', borderBottom: '1px solid var(--border)' }}>
               <span style={{ color: 'var(--muted)', fontSize: 13 }}>{k}</span>
               <span style={{ color: 'var(--text)', fontSize: 13, textAlign: 'right', maxWidth: 220 }}>{v}</span>

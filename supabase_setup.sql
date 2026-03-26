@@ -48,6 +48,16 @@ CREATE POLICY "Allow public delete"
   TO anon
   USING (true);
 
+-- 7. Policy: allow update (for admin dashboard actions like check-in)
+-- NOTE: This policy allows anonymous clients to update rows. For production
+-- you should restrict this to an authenticated admin role or add a WHERE
+-- clause to limit which columns/rows can be updated.
+CREATE POLICY "Allow public update"
+  ON registrations FOR UPDATE
+  TO anon
+  USING (true)
+  WITH CHECK (true);
+
 -- ================================================================
 -- OPTIONAL: Seed with a test entry to verify setup
 -- ================================================================
