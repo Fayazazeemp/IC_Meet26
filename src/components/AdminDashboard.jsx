@@ -9,6 +9,7 @@ export default function AdminDashboard({ onClose }) {
   const [selected, setSelected] = useState(null)
   const [deleting, setDeleting] = useState(null)
   const [filter, setFilter] = useState('all')
+  const [checkFilter, setCheckFilter] = useState('all')
 
   const load = useCallback(async () => {
     try {
@@ -32,7 +33,8 @@ export default function AdminDashboard({ onClose }) {
       (r.college || '').toLowerCase().includes(search.toLowerCase()) ||
       (r.area || '').toLowerCase().includes(search.toLowerCase())
     const matchFilter = filter === 'all' || r.source === filter
-    return matchSearch && matchFilter
+    const matchCheck = checkFilter === 'all' ? true : (checkFilter === 'checked' ? !!r.checked_in : !r.checked_in)
+    return matchSearch && matchFilter && matchCheck
   })
 
   async function handleDelete(reg) {
