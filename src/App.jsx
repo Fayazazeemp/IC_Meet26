@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { checkRegistration, submitRegistration, normalizePhone } from './lib/supabase'
+import { checkRegistration, submitRegistration, canonicalizePhone } from './lib/supabase'
 import { findStudentByPhone } from './data/students'
 import BadgeGenerator from './components/BadgeGenerator'
 import AdminDashboard from './components/AdminDashboard'
@@ -61,10 +61,11 @@ export default function App() {
 
   // ── Phone submit ──────────────────────────────────────────────────────────────
   async function handlePhoneSubmit() {
-    const norm = normalizePhone(phone)
+    // Convert whatever the user typed into a canonical +91XXXXXXXXXX when possible
+    const norm = canonicalizePhone(phone)
     const digits = norm.replace(/\D/g, '')
-    // require exactly 10 national digits (user should type only the 10-digit number)
-    if (digits.length !== 13) { setPhoneError('Please enter a 13-digit phone number (with country code).'); return }
+    // canonical form should be +91 followed by 10 digits -> 12 numeric characters (91XXXXXXXXXX)
+    if (digits.length !== 12) { setPhoneError('Please enter a valid 10-digit phone number.'); return }
     setPhoneLoading(true)
     setPhoneError('')
     try {
@@ -175,7 +176,7 @@ export default function App() {
         <div style={{ background:'#0a1628', border:'1px solid #1a3050', borderRadius:'20px', padding:'32px 28px' }}>
           <p style={{ color:'#4a7a8a', textAlign:'center', margin:'0 0 24px', fontSize:'14px', lineHeight:'1.5' }}>
             Enter your WhatsApp number to begin.<br />
-            <span style={{ color:'#2a4a5a', fontSize:'12px' }}>We'll look up your details automatically.</span>
+            <span style={{ color:'#2a4a5a', fontSize:'12px' }}>You can type the 10-digit number (e.g. 9876543210) or include the country code +91 — both work and will be normalized.</span>
           </p>
 
           <div style={{ display:'flex', flexDirection:'column', gap:'6px', marginBottom:'4px' }}>
@@ -190,7 +191,7 @@ export default function App() {
                 setPhoneError('')
               }}
               onKeyDown={e => e.key === 'Enter' && handlePhoneSubmit()}
-              placeholder="+91 1234567890"
+              placeholder="1234567890 or +91 1234567890"
               style={{ padding:'14px 16px', background:'#060d16', border:'1px solid #1a3050', borderRadius:'10px', color:'#e0d8c8', fontSize:'17px', outline:'none', letterSpacing:'1px', fontFamily:'Raleway, sans-serif' }}
               onFocus={e => e.target.style.borderColor = 'rgba(201,162,39,0.5)'}
               onBlur={e => e.target.style.borderColor = '#1a3050'}
