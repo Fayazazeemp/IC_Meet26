@@ -193,7 +193,7 @@ export default function App() {
         <div style={{ fontSize: 60, marginBottom: 12 }}>🎉</div>
         <h1 style={{ color: 'var(--gold)', fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(22px,6vw,30px)', margin: 0, marginBottom: 8 }}>JazakAllahu Khayran!</h1>
         <p style={{ color: 'var(--green)', margin: 0, marginBottom: 4, fontSize: 15 }}>Assalamu Alaikum, {(registeredData?.name || '').split(' ')[0]}!</p>
-        <p style={{ color: 'var(--subtle)', fontSize: 13, marginBottom: 28 }}>You're registered for the Islamic Campus Students Gatheringup 2026.</p>
+        <p style={{ color: 'var(--subtle)', fontSize: 13, marginBottom: 28 }}>You're registered for the Islamic Campus Students Gathering 2026.</p>
 
         <div className="fade-in-delay" style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: 20, marginBottom: 20, textAlign: 'left' }}>
           <p style={{ color: 'var(--subtle)', fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, margin: '0 0 12px', fontFamily: 'Raleway, sans-serif' }}>Registration Summary</p>
