@@ -12,18 +12,60 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 // ─── DB HELPERS ───────────────────────────────────────────────────────────────
 
 export async function checkRegistration(phone) {
-  const { data, error } = await supabase
-    .from('registrations')
-    .select('id, name, phone')
-    .eq('phone', normalizePhone(phone))
-    .maybeSingle()
+  const raw = normalizePhone(phone)
+  const digits = raw.replace(/\D/g, '')
+  const candidates = new Set([raw])
+
+  // If user entered a 10-digit number, try with +91 prefix
+  if (digits.length === 10) {
+    candidates.add(`+91${digits}`)
+    candidates.add(digits)
+  }
+
+  // Leading 0 -> remove and add +91
+  if (digits.length === 11 && digits.startsWith('0')) {
+    candidates.add(`+91${digits.slice(1)}`)
+    candidates.add(digits.slice(1))
+  }
+
+  // If user entered 91xxxxxxxxxx (12 digits starting with 91), try +91 version
+  if (digits.length === 12 && digits.startsWith('91')) {
+    candidates.add(`+${digits}`)
+    candidates.add(digits.slice(2))
+  }
+
+  // If input had a leading +, also try the version without +
+  if (raw.startsWith('+')) candidates.add(raw.replace(/^\+/, ''))
+
+  const candidateArray = Array.from(candidates)
+
+  // If we have only one candidate, use eq for clarity, otherwise use .in()
+  let resp
+  if (candidateArray.length === 1) {
+    resp = await supabase
+      .from('registrations')
+      .select('id, name, phone')
+      .eq('phone', candidateArray[0])
+      .maybeSingle()
+  } else {
+    const { data, error } = await supabase
+      .from('registrations')
+      .select('id, name, phone')
+      .in('phone', candidateArray)
+      .maybeSingle()
+    if (error) throw error
+    return data
+  }
+
+  const { data, error } = resp
   if (error) throw error
   return data // null if not registered
 }
 
 export async function submitRegistration(formData) {
   const payload = {
-    phone: normalizePhone(formData.phone),
+    // store canonical +91XXXXXXXXXX when possible for data consistency
+    phone: canonicalizePhone(normalizePhone(formData.phone)),
     name: formData.name?.trim(),
     fathers_name: formData.fathersName?.trim(),
     email: formData.email?.trim(),
@@ -45,6 +87,19 @@ export async function submitRegistration(formData) {
     .single()
   if (error) throw error
   return data
+}
+
+// Convert a user-provided phone string into canonical +91XXXXXXXXXX when
+// possible. If a canonical form can't be derived, returns the cleaned input.
+export function canonicalizePhone(p = '') {
+  const cleaned = String(p).replace(/\s+/g, '').trim()
+  const digits = cleaned.replace(/\D/g, '')
+
+  if (digits.length < 10) return cleaned
+
+  // take the last 10 digits as the national number and prefix with +91
+  const last10 = digits.slice(-10)
+  return `+91${last10}`
 }
 
 export async function fetchAllRegistrations() {
