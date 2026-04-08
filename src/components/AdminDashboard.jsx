@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { fetchAllRegistrations, deleteRegistration, setCheckIn } from '../lib/supabase'
 import { STUDENTS } from '../data/students'
+import ReportModal from './ReportModal'
 
 // Normalise phone for comparison (strip spaces, ensure +91 prefix)
 function normPhone(p = '') {
@@ -20,6 +21,7 @@ export default function AdminDashboard({ onClose }) {
   const [checkFilter, setCheckFilter] = useState('all')
   const [tab, setTab] = useState('registered') // 'registered' | 'unregistered'
   const [unregSearch, setUnregSearch] = useState('')
+  const [showReport, setShowReport] = useState(false)
 
   const load = useCallback(async () => {
     try {
@@ -150,6 +152,7 @@ export default function AdminDashboard({ onClose }) {
 
   // ── Render ─────────────────────────────────────────────────────────────────
   return (
+    <>
     <div style={{ position: 'fixed', inset: 0, background: _bg, zIndex: 900, overflowY: 'auto', padding: '16px 16px 40px', fontFamily: 'Raleway, sans-serif' }}>
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
 
@@ -165,6 +168,7 @@ export default function AdminDashboard({ onClose }) {
               ? <button onClick={exportCSV} style={{ padding: '8px 14px', background: _surface, color: _gold, border: `1px solid ${rgba(_gold, 0.25)}`, borderRadius: '8px', cursor: 'pointer', fontSize: '13px' }}>⬇ Export CSV</button>
               : <button onClick={exportUnregisteredCSV} style={{ padding: '8px 14px', background: _surface, color: _red, border: `1px solid ${rgba(_red, 0.25)}`, borderRadius: '8px', cursor: 'pointer', fontSize: '13px' }}>⬇ Export Unregistered</button>
             }
+            <button onClick={() => setShowReport(true)} style={{ padding: '8px 14px', background: _gold, color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '13px', fontWeight: 600 }}>📊 Report</button>
             <button onClick={onClose} style={{ padding: '8px 14px', background: 'none', color: rgba(_muted, 0.7), border: `1px solid ${rgba(_muted, 0.12)}`, borderRadius: '8px', cursor: 'pointer', fontSize: '13px' }}>✕ Close</button>
           </div>
         </div>
@@ -345,5 +349,14 @@ export default function AdminDashboard({ onClose }) {
 
       </div>
     </div>
+
+    {showReport && (
+      <ReportModal
+        registrations={registrations}
+        unregistered={unregistered}
+        onClose={() => setShowReport(false)}
+      />
+    )}
+    </>
   )
 }
