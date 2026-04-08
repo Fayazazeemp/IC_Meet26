@@ -105,13 +105,23 @@ export default function ReportModal({ registrations, unregistered, onClose }) {
 
   return (
     <>
-      {/* Print-only styles */}
+      {/* Print-only styles — visibility isolation trick works regardless of DOM nesting */}
       <style>{`
         @media print {
-          body > *:not(#report-modal-root) { display: none !important; }
-          #report-modal-root { position: static !important; background: #fff !important; padding: 0 !important; }
+          body * { visibility: hidden !important; }
+          #report-modal-root,
+          #report-modal-root * { visibility: visible !important; }
+          #report-modal-root {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            background: #fff !important;
+            padding: 20px !important;
+            overflow: visible !important;
+            z-index: 9999 !important;
+          }
           .no-print { display: none !important; }
-          .print-break { page-break-before: always; }
         }
       `}</style>
 
